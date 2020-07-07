@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus总线--非父子组件通信</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+<div id="app">
+    <wechatauthor></wechatauthor>
+    <hr>
+    <wechatuser_a></wechatuser_a>
+    <hr>
+    <wechatuser_b></wechatuser_b>
+</div>
+
+<script>
+    // 发布者组件
+    Vue.component("wechatauthor", {
+        template:
+            `<div>作者:
+            <input type="text" v-model="myText"/>
+            <button @click="publishMSg()">发布新作品</button>
+            </div>`,
+        data() {
+            return {
+                myText: ""
+            }
+        },
+        methods: {
+            publishMSg() {
+                console.log("发送消息: ", this.myText)
+                this.$bus.$emit("receiveMsg", this.myText);
+            }
+        }
+    });
+
+    // 读者组件1
+    Vue.component("wechatuser_a", {
+        template:
+            `<div>
+            读者A: {{msg}}
+            </div>`,
+        data() {
+            return {
+                msg: ""
+            }
+        },
+        mounted() {
+            this.$bus.$on("receiveMsg", (msg) => {
+                this.msg = msg;
+                console.log("读者B接收: ", msg);
+            });
+            console.log("生命周期函数，当组件的dom创建完成之后就会调用")
+        },
+        beforDestroy() {
+            console.log("beforDestroy 销毁组件调用！")
+            this.$bus.$off("busClick");
+        }
+    });
+
+    // 读者组件2
+    Vue.component("wechatuser_b", {
+        template:
+            `<div>
+            读者B: {{msg}}
+            </div>`,
+        data() {
+            return {
+                msg: ""
+            }
+        },
+        mounted() {
+            this.$bus.$on("receiveMsg", (msg) => {
+                this.msg = msg;
+                console.log("读者B接收: ", msg);
+            });
+            console.log("生命周期函数，当组件的dom创建完成之后就会调用")
+        },
+        beforDestroy() {
+            console.log("beforDestroy 销毁组件调用！")
+            this.$bus.$off("busClick");
+        }
+    });
+
+    // main.js里面添加：
+    Vue.prototype.$bus = new Vue();
+
+    var vm = new Vue({
+        el: "#app",
+    });
+</script>
+</body>
+</html>

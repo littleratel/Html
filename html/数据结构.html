@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TESTDEMO</title>
+</head>
+
+<body>
+<div id="app">
+    <form action="#" method="post">
+        <span>User Name:</span> <input type="text" id="username" name="username">
+        <span>Pass Word:</span> <input type="password" id="pwd" name="pwd">
+        <br>
+        <!-- 这是隐藏的输入框 -->
+        <span>Hidden PWD:</span><input type="hidden" id="hid_pwd" name="hidPwd">
+        <br>
+        <!-- 这是提交按钮 -->
+        <button onclick="submite()">Submite</button>
+    </form>
+</div>
+</body>
+<script>
+    function submite() {
+        var user = document.getElementById("username");
+        var pwd = document.getElementById("pwd");
+        var hid_pwd = document.getElementById("hid_pwd");
+        console.log(user.pwd);
+        console.log(pwd.value)
+        hid_pwd.value= "xxxxxxxxxxxxxxxxxxxxxxxx";
+    }
+
+</script>
+</html>

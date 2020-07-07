@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Common Demo</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model.lazy="myText" /> 用户名:
+    {{myText}}
+    <hr>
+
+    <input type="checkbox" v-model="isChecked"/> 记住用户名:
+    {{isChecked}}
+    <hr>
+
+    <p>你的爱好:
+        <input type="checkbox" v-model="checkArray" value="游泳"/> 游泳
+        <input type="checkbox" v-model="checkArray" value="阅读"/> 阅读
+        <input type="checkbox" v-model="checkArray" value="跑步"/> 跑步
+    </p>
+    {{checkArray}}
+    <hr>
+
+    <p>最好的编程语言:
+        <input type="radio" v-model="picked" value="Java"/> Java
+        <input type="radio" v-model="picked" value="PHP"/> Php
+        <input type="radio" v-model="picked" value="Js"/> Js
+    </p>
+    {{picked}}
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            myText:'',
+            isChecked:false,
+            checkArray: [],
+            picked:""
+        }
+    })
+</script>
+</body>
+</html>

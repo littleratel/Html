@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue自定义指令</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <div v-hello="'red'">1234567</div>
+    <div v-hello="'blue'">dfghjkllk</div>
+    <div v-hello="background">3333333</div>
+</div>
+
+<script>
+    Vue.directive("hello", {
+        // 指令也有生命周期函数
+        inserted(el, bind) { // 只会被执行一次
+            console.log("directive.inserted", el);
+            el.style.background = bind.value;
+        },
+        update(el, bind) {
+            el.style.background = bind.value;
+        }
+    });
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            background: "yellow",
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+@keyframes blink{
+    40%{
+        transform:rotateX(80deg);
+    }
+}
+
+#eye,
+#eye2 {
+    width: 11px;
+    height: 13px;
+    background: #282828;
+    border-radius: 50%;
+    position: relative;
+    top: 30px;
+    left: 27px;
+
+    /*旋转该元素*/
+    transform: rotate(8deg);
+    animation: blink 1s ease-in-out infinite alternate;
+}
+
+#eye2 {
+    transform: rotate(-8deg);
+    left: 69px;
+    top: 17px;
+}

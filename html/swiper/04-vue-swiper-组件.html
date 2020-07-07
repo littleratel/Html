@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+
+    <script type="text/javascript" src="lib/vue.js"></script>
+    <link rel="stylesheet" href="lib/swiper/css/swiper.css">
+    <script src="lib/swiper/js/swiper.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="box">
+    <swiper :key="datalist.length">  <!-- 根据diff原理，更新掉旧dom -->
+        <div class="swiper-slide" v-for="data in datalist">
+            {{data}}
+        </div>
+    </swiper>
+</div>
+
+<script type="text/javascript">
+    Vue.component("swiper", {
+        template:
+            `<div :class="'swiper-container ' + which">
+                <div class="swiper-wrapper">
+                    <slot></slot>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+            </div>`,
+        data() {
+            return {
+                which: "a"
+            }
+        },
+        created() {
+            console.log('-----> Swiper Created.');
+        },
+        mounted() {
+            console.log("Swiper Mounted!");
+
+            new Swiper('.a', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                navigation: {
+                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next',
+                },
+                autoplay: {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                }
+            })
+        }
+    })
+
+
+    new Vue({
+        el: "#box",
+        data: {
+            datalist: [],
+        },
+        created() {
+            console.log('======> Root Created!');
+        },
+        mounted() {  // 根结点mount方法调用，它等当前节点以及所有的子节点都创建完成后调用
+            console.log("Root Mounted!");
+            this.datalist.push("SW-11111");
+            this.datalist.push("SW-22222");
+            this.datalist.push("SW-33333");
+            // this.datalist = ["SW-11111", "SW-22222", "SW-33333"];
+        },
+        watch: {
+            datalist: {
+                handler(val, oldVal) {
+                    console.log("datalist changed: ", val);
+                },
+                deep: true //true 深度监听
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车结算</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <p> 选择需要结算的商品:
+    <ul>
+        <li v-for="data in dataList">
+            <input type="checkbox" v-model="selectedArray" :value="data" @change="handleLiChange()"> {{data.name}}
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button @click="reduceNum(data)"> -</button>
+            {{data.count}}
+            <button @click="data.count++"> +</button>
+        </li>
+    </ul>
+    <hr>
+    <p>
+        <input type="checkbox" v-model="isSelectedAll" @change="handleChange">全选
+    <p>
+        总金额：{{getSum()}}
+    </p>
+    </p>
+</div>
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            isSelectedAll: false,
+            selectedArray: [],
+            dataList: [
+                {
+                    id: 1,
+                    name: "物品1",
+                    price: 1,
+                    count: 4
+                },
+                {
+                    id: 2,
+                    name: "物品2",
+                    price: 2,
+                    count: 3
+                },
+                {
+                    id: 3,
+                    name: "物品3",
+                    price: 3,
+                    count: 2
+                },
+                {
+                    id: 4,
+                    name: "物品4",
+                    price: 4,
+                    count: 1
+                }
+            ]
+        },
+        methods: {
+            getSum() {
+                let sum = 0;
+                this.selectedArray.forEach(data => {
+                    sum += data.price * data.count;
+                })
+                return sum;
+            },
+            handleChange() {
+                if (this.isSelectedAll) {
+                    this.selectedArray = this.dataList;
+                } else {
+                    this.selectedArray = []
+                }
+            },
+            handleLiChange() {
+                if (this.selectedArray.length === this.dataList.length) {
+                    this.isSelectedAll = true;
+                } else {
+                    this.isSelectedAll = false;
+                }
+            },
+            reduceNum(data) {
+                if (data.count === 1) {
+                    alert(count.name + " 个数为0，您要从购物车中删除该商品吗？")
+                }else{
+                    data.count--;
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

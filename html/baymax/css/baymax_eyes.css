@@ -1,0 +1,21 @@
+
+#eye,
+#eye2 {
+    width: 11px;
+    height: 13px;
+    background: #282828;
+    border-radius: 50%;
+    position: relative;
+    top: 30px;
+    left: 27px;
+
+    /*旋转该元素,顺时针旋转*/
+    transform: rotate(8deg);
+}
+
+#eye2 {
+    /*使其旋转对称*/
+    transform: rotate(-8deg);
+    left: 69px;
+    top: 17px;
+}
